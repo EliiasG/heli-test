@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://3sglvgqf8juo"]
+[gd_scene load_steps=14 format=4 uid="uid://3sglvgqf8juo"]
 
 [ext_resource type="Script" uid="uid://cgr2c6isile7m" path="res://MonitorUi.cs" id="1_6dhw4"]
 [ext_resource type="Texture2D" uid="uid://bi4e3kyohdcn" path="res://assets/Helicopter_camo.png" id="1_fa1fk"]
@@ -82,12 +82,16 @@ viewport_path = NodePath("SubViewport")
 resource_local_to_scene = true
 albedo_texture = SubResource("ViewportTexture_8qdrl")
 
-[node name="Monitor" type="Node3D" node_paths=PackedStringArray("SpeedLabel", "AltitudeLabel", "ThrustBar", "Viewport")]
+[sub_resource type="ViewportTexture" id="ViewportTexture_6dhw4"]
+viewport_path = NodePath("VBoxContainer/HBoxContainer2/Control/Control/SubViewport")
+
+[node name="Monitor" type="Node3D" node_paths=PackedStringArray("SpeedLabel", "AltitudeLabel", "ThrustBar", "Viewport", "Display")]
 script = ExtResource("1_6dhw4")
 SpeedLabel = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer/Control/Label2")
 AltitudeLabel = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer/Control2/Label2")
 ThrustBar = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/ProgressBar")
 Viewport = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/Control/Control/SubViewport")
+Display = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/Control/Control")
 
 [node name="Cube_009" type="MeshInstance3D" parent="." node_paths=PackedStringArray("SubViewport")]
 transform = Transform3D(1, 0, 0, 0, 0.7257391, 0.68797, 0, -0.68797, 0.7257391, -0.0017433225, 0.5796382, 0.112960964)
@@ -107,7 +111,10 @@ offset_right = 0.0
 offset_bottom = -2.0
 rotation = 3.1415927
 
+[node name="Control" parent="SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/Control" index="0"]
+texture = SubResource("ViewportTexture_6dhw4")
+
 [node name="SubViewport" parent="SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/Control/Control" index="0"]
-size = Vector2i(404, 329)
+msaa_3d = 2
 
 [editable path="SubViewport/MonitorUI"]

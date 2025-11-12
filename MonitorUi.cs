@@ -19,8 +19,8 @@ public partial class MonitorUi : Node
 	{
 		var velocity = Helicopter.LinearVelocity.Length();
 		var altitude = Helicopter.GlobalPosition.Y;
-		SpeedLabel.Text = ((int)velocity).ToString("D3");
+		SpeedLabel.Text = ((int)(velocity * 3.6f)).ToString("D3");
 		AltitudeLabel.Text = ((int)altitude).ToString("D4");
-		ThrustBar.Value = Input.GetAxis("throttle_down", "throttle_up");
+		ThrustBar.Value = Helicopter.ThrustInput;
 	}
 }

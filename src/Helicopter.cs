@@ -12,9 +12,6 @@ public partial class Helicopter : RigidBody3D
 
     [Export] public float ThrottleAcceleration;
     
-
-    [Export] public Curve RateCurve;
-
     [Export] public Curve ThrottleCurve;
 
     [Export] public Node3D Rotor;
@@ -23,6 +20,11 @@ public partial class Helicopter : RigidBody3D
     [Export] public Gun Gun;
 
 
+    public float ThrustInput;
+    public float PitchInput;
+    public float RollInput;
+    public float YawInput;
+    
     private bool _reversed = false;
     private float _throttle = 0f;
     
@@ -39,7 +41,7 @@ public partial class Helicopter : RigidBody3D
         var inputDirection = new Vector3(
             0, //transform(Input.GetAxis("roll_right", "roll_left")),
             0,
-            transform(Input.GetAxis("yaw_left", "yaw_right"))
+            YawInput //transform(Input.GetAxis("yaw_left", "yaw_right"))
             //transform(Input.GetAxis("pitch_up", "pitch_down"))
         );
 
@@ -47,24 +49,24 @@ public partial class Helicopter : RigidBody3D
         var torque = GlobalTransform.Basis * inputDirection * RotationForce;
         ApplyForce(torque, TailRotor.GlobalPosition - GlobalPosition);
         // Apply lift to counteract gravity
-        var throttleInput = ThrottleCurve.Sample((1 + Input.GetAxis("throttle_down", "throttle_up")) * 0.5f) * 2;
+        var throttleInput = ThrottleCurve.Sample((1 + ThrustInput) * 0.5f) * 2;
         if (_reversed) throttleInput *= -1;
         _throttle = Mathf.MoveToward(_throttle, throttleInput, (float)delta * ThrottleAcceleration * 2);
         if (Input.IsActionJustPressed("reverse")) _reversed = !_reversed;
         var lift = GlobalTransform.Basis * Vector3.Up * LiftForce * _throttle;
 
         var inputDir = new Vector3(
-            transform(Input.GetAxis("pitch_down", "pitch_up")),
+            PitchInput, //transform(Input.GetAxis("pitch_down", "pitch_up")),
             0,
-            transform(Input.GetAxis("roll_right", "roll_left"))
+            RollInput //transform(Input.GetAxis("roll_right", "roll_left"))
         );
         ApplyForce(lift, Rotor.GlobalPosition - GlobalPosition);
         ApplyForce(GlobalTransform.Basis * inputDir * RotationForce * (1 + float.Abs(_throttle) * 0.75f), Rotor.GlobalPosition - GlobalPosition);
     }
 
-
-    private float transform(float value)
+/*
+    private float Transform(float value)
     {
         return RateCurve.Sample(float.Abs(value)) * float.Sign(value);
-    }
+    }*/
 }
