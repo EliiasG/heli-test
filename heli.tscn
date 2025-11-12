@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://do1kyg662fq1t"]
+[gd_scene load_steps=16 format=3 uid="uid://do1kyg662fq1t"]
 
 [ext_resource type="Script" uid="uid://bpoyc1r8isvbj" path="res://src/Helicopter.cs" id="1_sf6d7"]
 [ext_resource type="Script" uid="uid://hpsv0anyqr06" path="res://src/DragPoint.cs" id="2_gq8x0"]
 [ext_resource type="Curve" uid="uid://s7bsyqv2kt7f" path="res://stallcurve.tres" id="3_jwltu"]
 [ext_resource type="Script" uid="uid://dihrjxaphsltv" path="res://MovingThrottleInputController.cs" id="3_yxkaw"]
+[ext_resource type="Script" uid="uid://dgrk00nfpsqti" path="res://ThrottleInputController.cs" id="4_21xdl"]
 [ext_resource type="PackedScene" uid="uid://g5i0f4ufj6ps" path="res://helicopter_graphics.tscn" id="4_dywfm"]
 [ext_resource type="Script" uid="uid://4tf1r3cmyujn" path="res://Gun.cs" id="5_u4wh0"]
 [ext_resource type="Script" uid="uid://dvehkx75gfpj6" path="res://RotationInputController.cs" id="6_jleao"]
@@ -76,9 +77,14 @@ Helicopter = NodePath("..")
 RateCurve = SubResource("Curve_jwltu")
 
 [node name="MovingThrottleInputController" type="Node" parent="." node_paths=PackedStringArray("Helicopter")]
+process_mode = 4
 script = ExtResource("3_yxkaw")
 Helicopter = NodePath("..")
 ThrottleSpeed = 3.0
+
+[node name="ThrottleInputController" type="Node" parent="." node_paths=PackedStringArray("Helicopter")]
+script = ExtResource("4_21xdl")
+Helicopter = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0, 0.5, 0, 0, 0)
