@@ -1,0 +1,165 @@
+[gd_scene load_steps=13 format=3 uid="uid://do1kyg662fq1t"]
+
+[ext_resource type="Script" uid="uid://bpoyc1r8isvbj" path="res://src/Helicopter.cs" id="1_sf6d7"]
+[ext_resource type="Script" uid="uid://hpsv0anyqr06" path="res://src/DragPoint.cs" id="2_gq8x0"]
+[ext_resource type="Curve" uid="uid://s7bsyqv2kt7f" path="res://stallcurve.tres" id="3_jwltu"]
+[ext_resource type="PackedScene" uid="uid://g5i0f4ufj6ps" path="res://helicopter_graphics.tscn" id="4_dywfm"]
+[ext_resource type="Script" uid="uid://4tf1r3cmyujn" path="res://Gun.cs" id="5_u4wh0"]
+
+[sub_resource type="Curve" id="Curve_jwltu"]
+_data = [Vector2(0, 0), 0.0, 0.42391357, 0, 0, Vector2(1, 1), 3.0135076, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_dywfm"]
+_data = [Vector2(0, 0), 0.0, 0.39209637, 0, 0, Vector2(1, 1), 1.3532176, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7n0s1"]
+radius = 2.0605469
+height = 7.8725586
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sf6d7"]
+height = 8.05957
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h2yge"]
+sky_top_color = Color(0.22176534, 0.42867637, 0.81828845, 1)
+sky_horizon_color = Color(0.41316834, 0.6724016, 0.9501495, 1)
+ground_bottom_color = Color(0.4117647, 0.67058825, 0.9490196, 1)
+ground_horizon_color = Color(0.4117647, 0.67058825, 0.9490196, 1)
+
+[sub_resource type="Sky" id="Sky_1bvp3"]
+sky_material = SubResource("ProceduralSkyMaterial_h2yge")
+
+[sub_resource type="Environment" id="Environment_u4wh0"]
+background_mode = 2
+sky = SubResource("Sky_1bvp3")
+ambient_light_color = Color(1, 1, 1, 1)
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 1.13
+fog_density = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.001
+volumetric_fog_albedo = Color(0.59814733, 0.7906341, 0.92616874, 1)
+volumetric_fog_emission = Color(0, 0.135, 0.54, 1)
+volumetric_fog_length = 2048.0
+volumetric_fog_ambient_inject = 0.1
+adjustment_enabled = true
+adjustment_brightness = 1.37
+adjustment_contrast = 1.03
+adjustment_saturation = 0.41
+
+[node name="Helicopter" type="RigidBody3D" node_paths=PackedStringArray("Rotor", "TailRotor", "Gun")]
+mass = 500.0
+gravity_scale = 2.5
+center_of_mass_mode = 1
+inertia = Vector3(3600, 9101, 8400)
+script = ExtResource("1_sf6d7")
+RotationForce = 15000.0
+YawForce = 750.0
+LiftForce = 30000.0
+ThrottleAcceleration = 2.0
+RateCurve = SubResource("Curve_jwltu")
+ThrottleCurve = SubResource("Curve_dywfm")
+Rotor = NodePath("Marker3D")
+TailRotor = NodePath("Marker3D2")
+Gun = NodePath("Gun")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_7n0s1")
+debug_color = Color(0, 0.58099985, 0.83, 1)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0, 0.5, 0, -1, 1)
+shape = SubResource("CapsuleShape3D_sf6d7")
+debug_color = Color(0, 0.58099985, 0.83, 1)
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0, 0.5, 0, -1, -1)
+shape = SubResource("CapsuleShape3D_sf6d7")
+debug_color = Color(0, 0.58099985, 0.83, 1)
+
+[node name="DragPoint" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, 6.170806, 2.5, 5.572608)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 225.0
+Parent = NodePath("..")
+StallCurve = ExtResource("3_jwltu")
+
+[node name="DragPoint2" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, -6.5381937, 2.5, 5.572608)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 225.0
+Parent = NodePath("..")
+StallCurve = ExtResource("3_jwltu")
+
+[node name="DragPoint3" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, 6.170806, 2.5, -5.572608)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 225.0
+Parent = NodePath("..")
+StallCurve = ExtResource("3_jwltu")
+
+[node name="DragPoint4" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, -6.5381937, 2.5, -5.572608)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 225.0
+Parent = NodePath("..")
+StallCurve = ExtResource("3_jwltu")
+
+[node name="DragPoint5" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.3718586e-08, -1.1808581, 0, -4.3718586e-08, 2.2562486e-15, -1.0001646, 1.0001646, -5.161695e-08, -4.3718586e-08, 10.316383, 0, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 150.0
+Parent = NodePath("..")
+StallCurve = ExtResource("3_jwltu")
+
+[node name="DragPoint6" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.3718586e-08, -1.1808581, 0, -4.3718586e-08, 2.2562486e-15, -1.0001646, 1.0001646, -5.161695e-08, -4.3718586e-08, -8.02362, 0, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 110.0
+Parent = NodePath("..")
+StallCurve = ExtResource("3_jwltu")
+
+[node name="DragPoint7" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.3711385e-08, -0.99999994, 0, 0.99999994, -4.3711385e-08, 0, 0, 0, 1, 11.959, 0, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 30.0
+Parent = NodePath("..")
+StallCurve = ExtResource("3_jwltu")
+
+[node name="HelicopterGraphics" parent="." instance=ExtResource("4_dywfm")]
+transform = Transform3D(-7.059389e-08, 0, 1.615, 0, 1.615, 0, -1.615, 0, -7.059389e-08, -3.7288198, -0.8007593, 0)
+
+[node name="monitor" parent="HelicopterGraphics" index="11" node_paths=PackedStringArray("Helicopter", "Camera")]
+Helicopter = NodePath("../..")
+Camera = NodePath("../../Camera3D")
+
+[node name="Cube_009" parent="HelicopterGraphics/monitor3" index="0"]
+surface_material_override/0 = null
+surface_material_override/1 = null
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 3.682, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -1, 0)
+
+[node name="DragPoint8" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0860412, 0, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 100.0
+Parent = NodePath("..")
+StallCurve = ExtResource("3_jwltu")
+
+[node name="Gun" type="Marker3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -6.8202333, -0.98093104, 2.3841858e-07)
+script = ExtResource("5_u4wh0")
+BulletSpeed = 600.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -0.98698044, -0.9354677, 0)
+environment = SubResource("Environment_u4wh0")
+
+[editable path="HelicopterGraphics"]

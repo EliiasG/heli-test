@@ -1,0 +1,255 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwwcm4c0nfkdv"]
+
+[ext_resource type="FontFile" uid="uid://dpjsbiu7prqdy" path="res://assets/JetBrainsMono-2.304/fonts/ttf/JetBrainsMono-ExtraBold.ttf" id="1_1tf4g"]
+[ext_resource type="Script" uid="uid://wgslwcyfyctk" path="res://src/SubViewportTest.cs" id="2_pvloh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1tf4g"]
+bg_color = Color(0, 1, 0, 1)
+
+[sub_resource type="Theme" id="Theme_8qdrl"]
+default_font = ExtResource("1_1tf4g")
+default_font_size = 48
+BoxContainer/constants/separation = 0
+Label/colors/font_color = Color(0, 1, 0, 1)
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_1tf4g")
+
+[sub_resource type="LabelSettings" id="LabelSettings_1tf4g"]
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_pvloh"]
+font_size = 72
+font_color = Color(0, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ko0i5"]
+line_spacing = -15.0
+font_size = 45
+
+[sub_resource type="LabelSettings" id="LabelSettings_6fbjr"]
+font_size = 35
+
+[sub_resource type="LabelSettings" id="LabelSettings_d2i27"]
+line_spacing = -15.0
+font_size = 45
+
+[node name="MonitorUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -640.0
+offset_bottom = -136.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(256, 256)
+theme = SubResource("Theme_8qdrl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 111.67)
+layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SPD"
+label_settings = SubResource("LabelSettings_1tf4g")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -88.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "042"
+label_settings = SubResource("LabelSettings_pvloh")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="Control2" type="Control" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ALT"
+label_settings = SubResource("LabelSettings_1tf4g")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -88.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "0756"
+label_settings = SubResource("LabelSettings_pvloh")
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_vertical = 1
+min_value = -1.0
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/ProgressBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "T
+H
+R
+U
+S
+T"
+label_settings = SubResource("LabelSettings_ko0i5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="Control" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer2/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer2/Control/Control"]
+handle_input_locally = false
+size = Vector2i(404, 331)
+render_target_update_mode = 4
+script = ExtResource("2_pvloh")
+
+[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/HBoxContainer2/Control"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/Control"]
+custom_minimum_size = Vector2(0, 56.255)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/Control/HBoxContainer"]
+layout_mode = 2
+text = " 1/5 "
+label_settings = SubResource("LabelSettings_6fbjr")
+horizontal_alignment = 1
+
+[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/HBoxContainer2/Control/HBoxContainer"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer2/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "LANDING CAM"
+label_settings = SubResource("LabelSettings_6fbjr")
+horizontal_alignment = 1
+
+[node name="ColorRect3" type="ColorRect" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+color = Color(0, 1, 0, 1)
+
+[node name="ProgressBar2" type="ProgressBar" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+size_flags_vertical = 1
+value = 48.2
+fill_mode = 3
+show_percentage = false
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/ProgressBar2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "H
+E
+A
+L
+T
+H"
+label_settings = SubResource("LabelSettings_d2i27")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect4" type="ColorRect" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(7, 7)
+layout_mode = 2
+color = Color(0, 1, 0, 1)

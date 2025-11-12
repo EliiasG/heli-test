@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://bef53g5yfgj6h"]
+
+[ext_resource type="Script" uid="uid://cge8rlayi2mnv" path="res://src/HudDisplay.cs" id="1_64ctp"]
+[ext_resource type="Script" uid="uid://bssosx3cooud5" path="res://src/Hud.cs" id="2_8sq4i"]
+[ext_resource type="FontFile" uid="uid://dpjsbiu7prqdy" path="res://assets/JetBrainsMono-2.304/fonts/ttf/JetBrainsMono-ExtraBold.ttf" id="3_8sq4i"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_38et7"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7ax5"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_color = Color(5.5101075, 5.5101075, 5.5101075, 0.264)
+albedo_texture = SubResource("ViewportTexture_38et7")
+disable_receive_shadows = true
+grow_amount = 0.1
+
+[sub_resource type="QuadMesh" id="QuadMesh_2hfll"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_b7ax5")
+
+[sub_resource type="Curve" id="Curve_640wx"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Hud" type="MeshInstance3D" parent="." node_paths=PackedStringArray("SubViewport")]
+layers = 4
+gi_mode = 0
+mesh = SubResource("QuadMesh_2hfll")
+script = ExtResource("1_64ctp")
+SubViewport = NodePath("SubViewport")
+
+[node name="SubViewport" type="SubViewport" parent="Hud"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(720, 720)
+render_target_update_mode = 4
+
+[node name="Control" type="Control" parent="Hud/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_8sq4i")
+_scaleFactor = 0.7
+_color = Color(0, 12.837791, 0, 1)
+_font = ExtResource("3_8sq4i")
+_angle = 0.8028514559173916
+_animCurve = SubResource("Curve_640wx")
+_animTime = 0.5

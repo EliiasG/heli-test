@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://bjyjwipwargo2"]
+
+[sub_resource type="Gradient" id="Gradient_giydc"]
+colors = PackedColorArray(0.23753911, 0.23753914, 0.23753911, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1vtmn"]
+gradient = SubResource("Gradient_giydc")
+
+[sub_resource type="Gradient" id="Gradient_hvgcl"]
+offsets = PackedFloat32Array(0, 0.2923077, 1)
+colors = PackedColorArray(0.96638554, 0.42032132, 0, 0.65882355, 0.24, 0.11216, 0.014400001, 0.46666667, 0.13816993, 0.13816993, 0.13816993, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p32id"]
+gradient = SubResource("Gradient_hvgcl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_giydc"]
+emission_shape = 3
+emission_box_extents = Vector3(0.2, 0.2, 0.2)
+angle_min = -83.69999
+angle_max = 255.90001
+direction = Vector3(0, 0, 1)
+spread = 30.0
+initial_velocity_min = 32.0
+initial_velocity_max = 32.0
+gravity = Vector3(0, -2, 0)
+damping_min = 79.297005
+damping_max = 83.035
+scale_min = 0.5
+scale_max = 0.9
+color_ramp = SubResource("GradientTexture1D_p32id")
+color_initial_ramp = SubResource("GradientTexture1D_1vtmn")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = -2.2351742e-08
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gaq67"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_1vtmn"]
+material = SubResource("StandardMaterial3D_gaq67")
+
+[node name="GPUParticles3D" type="GPUParticles3D"]
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_giydc")
+draw_pass_1 = SubResource("BoxMesh_1vtmn")

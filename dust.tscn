@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://cyd7guhef3feh"]
+
+[sub_resource type="Gradient" id="Gradient_giydc"]
+colors = PackedColorArray(0.23753911, 0.23753914, 0.23753911, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1vtmn"]
+gradient = SubResource("Gradient_giydc")
+
+[sub_resource type="Gradient" id="Gradient_hvgcl"]
+colors = PackedColorArray(0.22, 0.1815, 0.12760001, 0.65882355, 0.13816993, 0.13816993, 0.13816993, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p32id"]
+gradient = SubResource("Gradient_hvgcl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_giydc"]
+emission_shape = 3
+emission_box_extents = Vector3(0.2, 0.2, 0.2)
+angle_min = -83.69999
+angle_max = 255.90001
+spread = 180.0
+initial_velocity_min = 4.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, -2, 0)
+damping_min = 25.000002
+damping_max = 25.000002
+scale_min = 0.79999995
+scale_max = 1.5999999
+color_ramp = SubResource("GradientTexture1D_p32id")
+color_initial_ramp = SubResource("GradientTexture1D_1vtmn")
+hue_variation_min = -2.2351742e-08
+hue_variation_max = -2.2351742e-08
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gaq67"]
+transparency = 1
+vertex_color_use_as_albedo = true
+stencil_flags = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_1vtmn"]
+material = SubResource("StandardMaterial3D_gaq67")
+
+[node name="GPUParticles3D" type="GPUParticles3D"]
+emitting = false
+amount = 4
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_giydc")
+draw_pass_1 = SubResource("BoxMesh_1vtmn")

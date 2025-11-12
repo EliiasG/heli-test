@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=3 uid="uid://bajke5n5r07cr"]
+
+[ext_resource type="Script" uid="uid://wgslwcyfyctk" path="res://src/SubViewportTest.cs" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://d1di8ejuyui8l" path="res://test_level.tscn" id="1_ig7tw"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0xm2m"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_color = Color(5.5101075, 5.5101075, 5.5101075, 0.264)
+albedo_texture = SubResource("ViewportTexture_0xm2m")
+disable_receive_shadows = true
+grow_amount = 0.1
+
+[sub_resource type="QuadMesh" id="QuadMesh_1bvp3"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_h2yge")
+
+[node name="Main" type="Node"]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="UI"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="UI/SubViewportContainer2" node_paths=PackedStringArray("Cam")]
+transparent_bg = true
+handle_input_locally = false
+screen_space_aa = 2
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+script = ExtResource("1_0xm2m")
+Cam = NodePath("../../../TestLevel/RigidBody3D/Node3D/Camera3D/CockpitCam")
+
+[node name="TestLevel" parent="." instance=ExtResource("1_ig7tw")]
+
+[node name="Hud" parent="TestLevel/RigidBody3D/Node3D2" index="0"]
+mesh = SubResource("QuadMesh_1bvp3")
+
+[editable path="TestLevel"]
+[editable path="TestLevel/RigidBody3D/Node3D2"]

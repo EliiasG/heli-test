@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://u1e2qfwfx4lr"]
+
+[ext_resource type="PackedScene" uid="uid://g5i0f4ufj6ps" path="res://helicopter_graphics.tscn" id="1_vo0hl"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="HelicopterGraphics" parent="." instance=ExtResource("1_vo0hl")]
+
+[node name="Camera3D" type="Camera3D" parent="HelicopterGraphics"]
+transform = Transform3D(0.5167959, 0, 0, 0, 0.51201445, 0.070137255, 0, -0.070137255, 0.51201445, 0, 0.968, 1.007)
+fov = 70.8
