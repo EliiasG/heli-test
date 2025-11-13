@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://do1kyg662fq1t"]
+[gd_scene load_steps=17 format=3 uid="uid://do1kyg662fq1t"]
 
 [ext_resource type="Script" uid="uid://bpoyc1r8isvbj" path="res://src/Helicopter.cs" id="1_sf6d7"]
 [ext_resource type="Script" uid="uid://hpsv0anyqr06" path="res://src/DragPoint.cs" id="2_gq8x0"]
@@ -13,9 +13,13 @@
 _data = [Vector2(0, 0), 0.0, 0.39209637, 0, 0, Vector2(1, 1), 1.3532176, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Curve" id="Curve_21xdl"]
+_data = [Vector2(0, 0), 0.0, 0.10266547, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 2.1484685, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="Curve" id="Curve_jwltu"]
-_data = [Vector2(0, 0), 0.0, 0.63880867, 0, 0, Vector2(1, 1), 2.1484685, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0), 0.0, 0.10266547, 0, 0, Vector2(0.645614, 0.16642642), 0.46422803, 0.46422803, 0, 0, Vector2(1, 1), 2.1484685, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7n0s1"]
 radius = 2.0605469
@@ -69,7 +73,7 @@ Gun = NodePath("Gun")
 process_mode = 4
 script = ExtResource("6_jleao")
 Helicopter = NodePath("..")
-RateCurve = SubResource("Curve_jwltu")
+RateCurve = SubResource("Curve_21xdl")
 
 [node name="RotationInputController2" type="Node" parent="." node_paths=PackedStringArray("Helicopter")]
 script = ExtResource("6_jleao")
@@ -77,12 +81,12 @@ Helicopter = NodePath("..")
 RateCurve = SubResource("Curve_jwltu")
 
 [node name="MovingThrottleInputController" type="Node" parent="." node_paths=PackedStringArray("Helicopter")]
-process_mode = 4
 script = ExtResource("3_yxkaw")
 Helicopter = NodePath("..")
 ThrottleSpeed = 3.0
 
 [node name="ThrottleInputController" type="Node" parent="." node_paths=PackedStringArray("Helicopter")]
+process_mode = 4
 script = ExtResource("4_21xdl")
 Helicopter = NodePath("..")
 
@@ -170,7 +174,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -1, 0)
 [node name="DragPoint8" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0860412, 0, 0)
 script = ExtResource("2_gq8x0")
-DragCoefficient = 50.0
+DragCoefficient = 20.0
 Parent = NodePath("..")
 StallCurve = ExtResource("3_jwltu")
 
