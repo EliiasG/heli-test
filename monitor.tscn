@@ -1,12 +1,12 @@
-[gd_scene load_steps=14 format=4 uid="uid://3sglvgqf8juo"]
+[gd_scene load_steps=13 format=4 uid="uid://3sglvgqf8juo"]
 
-[ext_resource type="Script" uid="uid://cgr2c6isile7m" path="res://MonitorUi.cs" id="1_6dhw4"]
+[ext_resource type="Script" uid="uid://cgr2c6isile7m" path="res://src/MonitorUi.cs" id="1_6dhw4"]
 [ext_resource type="Texture2D" uid="uid://bi4e3kyohdcn" path="res://assets/Helicopter_camo.png" id="1_fa1fk"]
 [ext_resource type="Texture2D" uid="uid://cuhf7xktl051d" path="res://assets/Gun_wing.png" id="2_8qdrl"]
 [ext_resource type="Script" uid="uid://cge8rlayi2mnv" path="res://src/HudDisplay.cs" id="3_8qdrl"]
 [ext_resource type="PackedScene" uid="uid://cwwcm4c0nfkdv" path="res://monitor_ui.tscn" id="4_xk0nc"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_thuba"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tw6dq"]
 resource_name = "Material.001"
 cull_mode = 2
 albedo_texture = ExtResource("1_fa1fk")
@@ -16,7 +16,7 @@ texture_filter = 2
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ejhju"]
 albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_aq126"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_6dhw4"]
 _surfaces = [{
 "aabb": AABB(-0.36208588, -0.32821435, -0.062500015, 0.72417176, 0.5770823, 0.12500006),
 "format": 34896613377,
@@ -50,7 +50,7 @@ _surfaces = [{
 "index_count": 126,
 "index_data": PackedByteArray("LAAtAAIALAABAC0ALgAsAAIALgACAAMAAwAAAC4AAwAvAAAAFgAwABUAFgAxADAABAAFAAYABAAHAAUAMgAzADQAMwALADQAMwAKAAsAMgA1ADMAMgAJADUAMgAIAAkADAANAA4ADAAPAA0AEAA2ADcAEAARADYAFAA4ADkAFAAXADgAEgA6ABMAEgA7ADoAHAAfADwAHAA9AB8AHQAcADwAHgAcAB0AGgAcAB4AHQA8AD4AGgAZABwAHQA+ABgAGAAZABoAGAA+ABkAPgA/ABkAPgAbAD8AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkA"),
 "lods": [0.075230174, PackedByteArray("AAABAAIAAAACAAMABAAFAAYABAAHAAUACAAJAAoACgALAAgADAANAA4ADAAPAA0AEAARABIAEgARABMAFAAVABYAFAAXABUAGAAZABoAGAAbABkAGgAZABwAHQAbABgAGgAcAB4AHgAcAB0AHQAfABsAHQAcAB8AIAAhACIAIAAjACEAJAAlACYAJAAnACUAKAApACoAKAArACkA")],
-"material": SubResource("StandardMaterial3D_thuba"),
+"material": SubResource("StandardMaterial3D_tw6dq"),
 "name": "m_65d95b1c-4daa-73d0-abba-4bfc1ed05415",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -70,28 +70,24 @@ _surfaces = [{
 "vertex_data": PackedByteArray("//8AAG4B//8AAP//AAD///////8AAP//AAAAAG4B////f/9//3//f/9//3//f/9/")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_aq126")
+shadow_mesh = SubResource("ArrayMesh_6dhw4")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1cy5y"]
 albedo_texture = ExtResource("2_8qdrl")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_8qdrl"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_0wofj"]
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xk0nc"]
 resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_8qdrl")
+albedo_texture = SubResource("ViewportTexture_0wofj")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_6dhw4"]
-viewport_path = NodePath("VBoxContainer/HBoxContainer2/Control/Control/SubViewport")
-
-[node name="Monitor" type="Node3D" node_paths=PackedStringArray("SpeedLabel", "AltitudeLabel", "ThrustBar", "Viewport", "Display")]
+[node name="Monitor" type="Node3D" node_paths=PackedStringArray("SpeedLabel", "AltitudeLabel", "ThrustBar", "Viewport")]
 script = ExtResource("1_6dhw4")
 SpeedLabel = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer/Control/Label2")
 AltitudeLabel = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer/Control2/Label2")
 ThrustBar = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/ProgressBar")
 Viewport = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/Control/Control/SubViewport")
-Display = NodePath("SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/Control/Control")
 
 [node name="Cube_009" type="MeshInstance3D" parent="." node_paths=PackedStringArray("SubViewport")]
 transform = Transform3D(1, 0, 0, 0, 0.7257391, 0.68797, 0, -0.68797, 0.7257391, -0.0017433225, 0.5796382, 0.112960964)
@@ -112,9 +108,10 @@ offset_bottom = -2.0
 rotation = 3.1415927
 
 [node name="Control" parent="SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/Control" index="0"]
-texture = SubResource("ViewportTexture_6dhw4")
+stretch_shrink = 4
 
 [node name="SubViewport" parent="SubViewport/MonitorUI/VBoxContainer/HBoxContainer2/Control/Control" index="0"]
 msaa_3d = 2
+size = Vector2i(101, 82)
 
 [editable path="SubViewport/MonitorUI"]

@@ -15,13 +15,17 @@ run/main_scene="uid://bajke5n5r07cr"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+display_server/driver.linuxbsd="wayland"
+
 [dotnet]
 
 project/assembly_name="HeliTest"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/sky_3d/plugin.cfg", "res://addons/terrain_3d/plugin.cfg")
+enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg")
 
 [input]
 

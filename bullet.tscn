@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cmqammy5n8of6"]
 
-[ext_resource type="Script" uid="uid://j3h63cy8xgy8" path="res://Bullet.cs" id="1_v7oki"]
+[ext_resource type="Script" uid="uid://j3h63cy8xgy8" path="res://src/Bullet.cs" id="1_v7oki"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtl8c"]
 albedo_color = Color(0.36, 0.36, 0.36, 1)
@@ -20,5 +20,4 @@ script = ExtResource("1_v7oki")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.9106855e-15, 4.371139e-08, 1, 1, -4.371139e-08, 0, 4.371139e-08, 1, -4.371139e-08, 0, 0, -1.947536)
-layers = 2
 mesh = SubResource("CapsuleMesh_v7oki")
