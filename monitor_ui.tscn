@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwwcm4c0nfkdv"]
+[gd_scene load_steps=12 format=3 uid="uid://cwwcm4c0nfkdv"]
 
 [ext_resource type="FontFile" uid="uid://dpjsbiu7prqdy" path="res://assets/JetBrainsMono-2.304/fonts/ttf/JetBrainsMono-ExtraBold.ttf" id="1_1tf4g"]
+[ext_resource type="Shader" uid="uid://byxc0o0bbfpha" path="res://monitor.gdshader" id="2_ko0i5"]
 [ext_resource type="Script" uid="uid://wgslwcyfyctk" path="res://src/SubViewportTest.cs" id="2_pvloh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1tf4g"]
@@ -23,6 +24,12 @@ font_color = Color(0, 1, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_ko0i5"]
 line_spacing = -15.0
 font_size = 45
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ko0i5"]
+shader = ExtResource("2_ko0i5")
+shader_parameter/brightnessMult = 2.0000000298024
+shader_parameter/wiggleMult = 0.005
+shader_parameter/chromaticAberrationOffset = 0.001
 
 [sub_resource type="LabelSettings" id="LabelSettings_6fbjr"]
 font_size = 35
@@ -82,7 +89,7 @@ text = "SPD"
 label_settings = SubResource("LabelSettings_1tf4g")
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/Control"]
+[node name="SpeedLabel" type="Label" parent="VBoxContainer/HBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -118,7 +125,7 @@ text = "ALT"
 label_settings = SubResource("LabelSettings_1tf4g")
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/Control2"]
+[node name="AltLabel" type="Label" parent="VBoxContainer/HBoxContainer/Control2"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -146,7 +153,7 @@ custom_minimum_size = Vector2(7, 7)
 layout_mode = 2
 color = Color(0, 1, 0, 1)
 
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2"]
+[node name="ThrustBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 size_flags_vertical = 1
@@ -155,7 +162,7 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/ProgressBar"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/ThrustBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -181,16 +188,35 @@ color = Color(0, 1, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Control" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer2/Control"]
+[node name="Control2" type="Control" parent="VBoxContainer/HBoxContainer2/Control"]
 layout_mode = 2
 size_flags_vertical = 3
-stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer2/Control/Control"]
+[node name="Control" type="SubViewportContainer" parent="VBoxContainer/HBoxContainer2/Control/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+stretch = true
+stretch_shrink = 4
+
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/HBoxContainer2/Control/Control2/Control"]
 handle_input_locally = false
-size = Vector2i(404, 331)
+size = Vector2i(101, 82)
 render_target_update_mode = 4
 script = ExtResource("2_pvloh")
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/HBoxContainer2/Control/Control2"]
+material = SubResource("ShaderMaterial_ko0i5")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ColorRect2" type="ColorRect" parent="VBoxContainer/HBoxContainer2/Control"]
 custom_minimum_size = Vector2(7, 7)

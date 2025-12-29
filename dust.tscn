@@ -39,9 +39,9 @@ stencil_flags = 2
 material = SubResource("StandardMaterial3D_gaq67")
 
 [node name="GPUParticles3D" type="GPUParticles3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 emitting = false
-amount = 4
-lifetime = 0.5
+amount = 16
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_giydc")

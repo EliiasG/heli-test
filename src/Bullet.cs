@@ -4,11 +4,10 @@ using System;
 public partial class Bullet : Node3D
 {
     public Node3DPool ParticlePool;
-    [Export] public RayCast3D RayCast3D;
 
     public Vector3 Velocity;
 
-    public Bullet Previous;
+    public bool Active;
 
     public override void _PhysicsProcess(double delta)
     {
@@ -22,13 +21,17 @@ public partial class Bullet : Node3D
             From = start,
             To = end,
             CollideWithBodies = true,
-            CollideWithAreas = false,
+            CollideWithAreas = Active,
         };
 
         var result = spaceState.IntersectRay(query);
         if (result.Count > 0)
         {
             var hitPos = (Vector3)result["position"];
+            if (result["collider"].As<GodotObject>() is HitBox hb)
+            {
+                hb.Hit();
+            }
             Visible = false;
             ProcessMode = ProcessModeEnum.Disabled;
             var particles = ParticlePool.GetNext() as GpuParticles3D;
@@ -37,12 +40,8 @@ public partial class Bullet : Node3D
         }
         else
         {
-            if (Previous is not { Visible: true })
-                LookAt(GlobalPosition + Velocity);
-            else
-                LookAt(Previous.GlobalPosition + Previous.Velocity * 0.5f);
-
             GlobalPosition += Velocity * (float)delta;
         }
     }
+
 }

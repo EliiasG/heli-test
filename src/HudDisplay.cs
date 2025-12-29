@@ -7,7 +7,7 @@ public partial class HudDisplay: MeshInstance3D
 
     public override void _Ready()
     {
-
+        if (SubViewport == null) return;
         // --- correct way to get a ViewportTexture ---
         var viewTex = SubViewport.GetTexture();
         // --- get current effective material, but duplicate it so we don't edit a shared resource ---

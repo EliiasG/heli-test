@@ -1,0 +1,86 @@
+[gd_scene load_steps=4 format=3 uid="uid://do1kyg662fq1t"]
+
+[ext_resource type="Script" uid="uid://bpoyc1r8isvbj" path="res://src/Helicopter.cs" id="1_sf6d7"]
+[ext_resource type="Script" uid="uid://hpsv0anyqr06" path="res://src/DragPoint.cs" id="2_gq8x0"]
+
+[sub_resource type="Curve" id="Curve_dywfm"]
+_data = [Vector2(0, 0), 0.0, 1.2020037, 0, 0, Vector2(1, 1), 0.36177433, 0.0, 0, 0]
+point_count = 2
+
+[node name="Helicopter" type="RigidBody3D" node_paths=PackedStringArray("Rotor", "TailRotor", "RotorFront", "RotorBack", "RotorLeft", "RotorRight")]
+mass = 500.0
+gravity_scale = 2.5
+center_of_mass_mode = 1
+inertia = Vector3(3600, 9101, 8400)
+script = ExtResource("1_sf6d7")
+RotationForce = 20000.0
+YawForce = 60.0
+LiftForce = 40.0
+ThrottleAcceleration = 5.0
+ThrottleCurve = SubResource("Curve_dywfm")
+Rotor = NodePath("Marker3D")
+TailRotor = NodePath("DragPoint5")
+RotorFront = NodePath("RotorFront")
+RotorBack = NodePath("RotorBack")
+RotorLeft = NodePath("RotorLeft")
+RotorRight = NodePath("RotorRight")
+
+[node name="RotorLeft" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, 0, 2.5, 12)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 35.0
+Parent = NodePath("..")
+
+[node name="RotorFront" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, -10, 2.5, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 35.0
+Parent = NodePath("..")
+
+[node name="RotorBack" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, 12, 2.5, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 35.0
+Parent = NodePath("..")
+
+[node name="RotorRight" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, 0, 2.5, -12)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 35.0
+Parent = NodePath("..")
+
+[node name="DragPoint5" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.3718586e-08, -1.1808581, 0, -4.3718586e-08, 2.2562486e-15, -1.0001646, 1.0001646, -5.161695e-08, -4.3718586e-08, 10.316383, 0, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 80.0
+Parent = NodePath("..")
+
+[node name="DragPoint6" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.3718586e-08, -1.1808581, 0, -4.3718586e-08, 2.2562486e-15, -1.0001646, 1.0001646, -5.161695e-08, -4.3718586e-08, -8.02362, 0, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 65.0
+Parent = NodePath("..")
+
+[node name="DragPoint7" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(0.2614648, -0.9652129, 0, 0.9652129, 0.2614648, 0, 0, 0, 1, 11.32552, 0, 0.00066947937)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 15.0
+Parent = NodePath("..")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 3.682, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -1, 0)
+
+[node name="DragPoint8" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0860412, 0, 0)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 15.0
+Parent = NodePath("..")
+
+[node name="DragPoint9" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(0.4312197, -0.9022467, 0, 0.9022467, 0.4312197, 0, 0, 0, 1, -7.2177014, 1.1679728, 0.001)
+script = ExtResource("2_gq8x0")
+DragCoefficient = 10.0
+Parent = NodePath("..")

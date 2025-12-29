@@ -7,6 +7,8 @@ public partial class ConnectionManager : Node
 	[Export] private Button _joinButton;
 	[Export] private Button _pingButton;
 	[Export] private Button _ipListButton;
+	[Export] private CheckBox _controlsBox;
+	[Export] private Helicopter _helicopter;
 	
 	[Export] private TextEdit _hostAddress;
 	[Export] private Label _output;
@@ -18,6 +20,7 @@ public partial class ConnectionManager : Node
 		_joinButton.ButtonDown += OnJoinButtonPressed;
 		_ipListButton.ButtonDown += OnIPListButtonPressed;
 		_pingButton.ButtonDown += OnPingButtonPressed;
+		_controlsBox.Toggled += on => _helicopter.DisableControls= on;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

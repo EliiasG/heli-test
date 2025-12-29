@@ -8,6 +8,7 @@ public partial class MonitorUi : Node
 	[Export] public Label SpeedLabel;
 	[Export] public Label AltitudeLabel;
 	[Export] public ProgressBar ThrustBar;
+	[Export] public ProgressBar HealthBar;
 	[Export] public SubViewportTest Viewport;
 
 	public override void _EnterTree()
@@ -22,5 +23,7 @@ public partial class MonitorUi : Node
 		SpeedLabel.Text = ((int)(velocity * 3.6f)).ToString("D3");
 		AltitudeLabel.Text = ((int)altitude).ToString("D4");
 		ThrustBar.Value = Helicopter.ThrustInput;
+		HealthBar.MaxValue = Helicopter.MaxHealth;
+		HealthBar.Value = Helicopter.Health;
 	}
 }

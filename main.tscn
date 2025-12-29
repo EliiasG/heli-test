@@ -1,26 +1,34 @@
-[gd_scene load_steps=9 format=3 uid="uid://bajke5n5r07cr"]
+[gd_scene load_steps=10 format=3 uid="uid://bajke5n5r07cr"]
 
 [ext_resource type="Script" uid="uid://wgslwcyfyctk" path="res://src/SubViewportTest.cs" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://d1di8ejuyui8l" path="res://test_level.tscn" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://t23qu7nn3oi5" path="res://src/RBPredictor.cs" id="2_lquwl"]
+[ext_resource type="Shader" uid="uid://d2dthaknatne1" path="res://vignette.gdshader" id="2_lquwl"]
 [ext_resource type="Script" uid="uid://dxrp1yvaxk25u" path="res://src/ConnectionManager.cs" id="3_1bvp3"]
-[ext_resource type="Script" uid="uid://dalw6oie6vmd0" path="res://MultiplayerManager.cs" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://dalw6oie6vmd0" path="res://src/MultiplayerManager.cs" id="4_lquwl"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_0xm2m"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_lquwl"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
 resource_local_to_scene = true
 transparency = 1
 shading_mode = 0
 albedo_color = Color(5.5101075, 5.5101075, 5.5101075, 0.264)
-albedo_texture = SubResource("ViewportTexture_0xm2m")
+albedo_texture = SubResource("ViewportTexture_lquwl")
 disable_receive_shadows = true
 grow_amount = 0.1
 
-[sub_resource type="QuadMesh" id="QuadMesh_1bvp3"]
+[sub_resource type="QuadMesh" id="QuadMesh_272bh"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_h2yge")
+material = SubResource("StandardMaterial3D_7mycd")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7mycd"]
+shader = ExtResource("2_lquwl")
+shader_parameter/inner_radius = 0.1
+shader_parameter/outer_radius = 1.0
+shader_parameter/vignette_strength = 1.0
+shader_parameter/dither_strength = 0.03
+shader_parameter/vignette_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node"]
 
@@ -40,20 +48,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+stretch_shrink = 3
 
 [node name="SubViewport" type="SubViewport" parent="UI/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1152, 648)
+screen_space_aa = 2
+size = Vector2i(384, 216)
 render_target_update_mode = 4
 
 [node name="TestLevel" parent="UI/SubViewportContainer/SubViewport" instance=ExtResource("1_ig7tw")]
 
-[node name="Hud" parent="UI/SubViewportContainer/SubViewport/TestLevel/RigidBody3D/Node3D2" index="0"]
-mesh = SubResource("QuadMesh_1bvp3")
-skeleton = NodePath("..")
+[node name="Hud" parent="UI/SubViewportContainer/SubViewport/TestLevel/Helicopter/Node3D2" index="0"]
+mesh = SubResource("QuadMesh_272bh")
 
-[node name="Player2" parent="UI/SubViewportContainer/SubViewport/TestLevel" index="7"]
-script = ExtResource("2_lquwl")
+[node name="Area3D" parent="UI/SubViewportContainer/SubViewport/TestLevel/RemoteHelicopter" index="12" node_paths=PackedStringArray("MultiplayerManager")]
+MultiplayerManager = NodePath("../../../../../../MultiplayerManager")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="UI"]
 layout_mode = 1
@@ -71,7 +80,16 @@ screen_space_aa = 2
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 script = ExtResource("1_0xm2m")
-Cam = NodePath("../../SubViewportContainer/SubViewport/TestLevel/RigidBody3D/Node3D/Camera3D/CockpitCam")
+Cam = NodePath("../../SubViewportContainer/SubViewport/TestLevel/Helicopter/Node3D/Camera3D/CockpitCam")
+
+[node name="ColorRect" type="ColorRect" parent="UI"]
+material = SubResource("ShaderMaterial_7mycd")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="HostButton" type="Button" parent="UI"]
 layout_mode = 1
@@ -153,19 +171,28 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "List IPs"
 
-[node name="ConnectionManager" type="Node" parent="." node_paths=PackedStringArray("_hostButton", "_joinButton", "_pingButton", "_ipListButton", "_hostAddress", "_output")]
+[node name="CheckBox" type="CheckBox" parent="UI"]
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 24.0
+text = "Disable controls"
+
+[node name="ConnectionManager" type="Node" parent="." node_paths=PackedStringArray("_hostButton", "_joinButton", "_pingButton", "_ipListButton", "_controlsBox", "_helicopter", "_hostAddress", "_output")]
 script = ExtResource("3_1bvp3")
 _hostButton = NodePath("../UI/HostButton")
 _joinButton = NodePath("../UI/JoinButton")
 _pingButton = NodePath("../UI/PingButton")
 _ipListButton = NodePath("../UI/IPsButton")
+_controlsBox = NodePath("../UI/CheckBox")
+_helicopter = NodePath("../UI/SubViewportContainer/SubViewport/TestLevel/Helicopter")
 _hostAddress = NodePath("../UI/TextEdit")
 _output = NodePath("../UI/ScrollContainer/Label")
 
-[node name="MultiplayerManager" type="Node" parent="." node_paths=PackedStringArray("_playerRB", "_otherPlayer")]
+[node name="MultiplayerManager" type="Node" parent="." node_paths=PackedStringArray("_playerHeli", "_otherHeli")]
 script = ExtResource("4_lquwl")
-_playerRB = NodePath("../UI/SubViewportContainer/SubViewport/TestLevel/RigidBody3D")
-_otherPlayer = NodePath("../UI/SubViewportContainer/SubViewport/TestLevel/Player2")
+_playerHeli = NodePath("../UI/SubViewportContainer/SubViewport/TestLevel/Helicopter")
+_otherHeli = NodePath("../UI/SubViewportContainer/SubViewport/TestLevel/RemoteHelicopter")
 
 [editable path="UI/SubViewportContainer/SubViewport/TestLevel"]
-[editable path="UI/SubViewportContainer/SubViewport/TestLevel/RigidBody3D/Node3D2"]
+[editable path="UI/SubViewportContainer/SubViewport/TestLevel/Helicopter/Node3D2"]
+[editable path="UI/SubViewportContainer/SubViewport/TestLevel/RemoteHelicopter"]

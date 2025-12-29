@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcfr7i445n2dr"]
+
+[ext_resource type="PackedScene" uid="uid://do1kyg662fq1t" path="res://helicopter_base.tscn" id="1_4itmu"]
+[ext_resource type="PackedScene" uid="uid://bq11xm33741ce" path="res://other_helicopter_graphics.tscn" id="2_l88g6"]
+[ext_resource type="Script" uid="uid://cwmj3u8n77g8h" path="res://src/HitBox.cs" id="3_0udpb"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l88g6"]
+radius = 2.0
+height = 15.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0udpb"]
+height = 0.6
+radius = 6.0
+
+[node name="RemoteHelicopter" instance=ExtResource("1_4itmu")]
+
+[node name="HelicopterGraphics" parent="." index="11" instance=ExtResource("2_l88g6")]
+transform = Transform3D(-7.059389e-08, 0, 1.615, 0, 1.615, 0, -1.615, 0, -7.059389e-08, -3.7288198, -0.8007593, 0)
+
+[node name="Area3D" type="Area3D" parent="." index="12"]
+script = ExtResource("3_0udpb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 1.75, 1.0000001, 0)
+shape = SubResource("CapsuleShape3D_l88g6")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D" index="1"]
+transform = Transform3D(-1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0, 0, 1, 0.50000006, 2.3, 0)
+shape = SubResource("CylinderShape3D_0udpb")

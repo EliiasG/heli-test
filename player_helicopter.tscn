@@ -1,0 +1,195 @@
+[gd_scene load_steps=16 format=3 uid="uid://2fpt0n54utwc"]
+
+[ext_resource type="Script" uid="uid://bpoyc1r8isvbj" path="res://src/Helicopter.cs" id="1_ldy3t"]
+[ext_resource type="Script" uid="uid://dvehkx75gfpj6" path="res://src/RotationInputController.cs" id="2_wr2uj"]
+[ext_resource type="Script" uid="uid://dihrjxaphsltv" path="res://src/MovingThrottleInputController.cs" id="3_k18e7"]
+[ext_resource type="Script" uid="uid://dgrk00nfpsqti" path="res://src/ThrottleInputController.cs" id="4_s82ht"]
+[ext_resource type="Script" uid="uid://hpsv0anyqr06" path="res://src/DragPoint.cs" id="5_0getx"]
+[ext_resource type="PackedScene" uid="uid://g5i0f4ufj6ps" path="res://helicopter_graphics.tscn" id="6_l5htd"]
+[ext_resource type="Script" uid="uid://4tf1r3cmyujn" path="res://src/Gun.cs" id="7_fa2sr"]
+
+[sub_resource type="Curve" id="Curve_dywfm"]
+_data = [Vector2(0, 0), 0.0, 1.2020037, 0, 0, Vector2(1, 1), 0.36177433, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_8wutd"]
+_data = [Vector2(0, 0), 0.0, 0.10266547, 0, 0, Vector2(0.99999, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 2.1484685, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_jsfol"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5haps"]
+radius = 2.0605469
+height = 7.8725586
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m6cto"]
+height = 8.05957
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mbugi"]
+sky_top_color = Color(0.22176534, 0.42867637, 0.81828845, 1)
+sky_horizon_color = Color(0.41316834, 0.6724016, 0.9501495, 1)
+ground_bottom_color = Color(0.4117647, 0.67058825, 0.9490196, 1)
+ground_horizon_color = Color(0.4117647, 0.67058825, 0.9490196, 1)
+
+[sub_resource type="Sky" id="Sky_1bvp3"]
+sky_material = SubResource("ProceduralSkyMaterial_mbugi")
+
+[sub_resource type="Environment" id="Environment_jedmw"]
+background_mode = 2
+sky = SubResource("Sky_1bvp3")
+ambient_light_color = Color(1, 1, 1, 1)
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 1.13
+fog_density = 0.0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.001
+volumetric_fog_albedo = Color(0.59814733, 0.7906341, 0.92616874, 1)
+volumetric_fog_emission = Color(0, 0.135, 0.54, 1)
+volumetric_fog_length = 2048.0
+volumetric_fog_ambient_inject = 0.1
+adjustment_enabled = true
+adjustment_saturation = 0.76
+
+[node name="Helicopter" type="RigidBody3D" node_paths=PackedStringArray("Rotor", "TailRotor", "RotorFront", "RotorBack", "RotorLeft", "RotorRight", "Gun")]
+mass = 500.0
+gravity_scale = 2.5
+center_of_mass_mode = 1
+inertia = Vector3(3600, 9101, 8400)
+contact_monitor = true
+max_contacts_reported = 16
+script = ExtResource("1_ldy3t")
+RotationForce = 20000.0
+YawForce = 50.0
+LiftForce = 40.0
+ThrottleAcceleration = 5.0
+ThrottleCurve = SubResource("Curve_dywfm")
+Rotor = NodePath("Marker3D")
+TailRotor = NodePath("DragPoint5")
+RotorFront = NodePath("RotorFront")
+RotorBack = NodePath("RotorBack")
+RotorLeft = NodePath("RotorLeft")
+RotorRight = NodePath("RotorRight")
+Gun = NodePath("Gun")
+
+[node name="RotorLeft" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, 0, 2.5, 12)
+script = ExtResource("5_0getx")
+DragCoefficient = 35.0
+Parent = NodePath("..")
+
+[node name="RotorFront" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, -10, 2.5, 0)
+script = ExtResource("5_0getx")
+DragCoefficient = 35.0
+Parent = NodePath("..")
+
+[node name="RotorBack" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, 12, 2.5, 0)
+script = ExtResource("5_0getx")
+DragCoefficient = 35.0
+Parent = NodePath("..")
+
+[node name="RotorRight" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.371139e-08, -1.1553797, 0, 1, -5.050325e-08, 0, 0, 0, 1.1069351, 0, 2.5, -12)
+script = ExtResource("5_0getx")
+DragCoefficient = 35.0
+Parent = NodePath("..")
+
+[node name="DragPoint5" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.3718586e-08, -1.1808581, 0, -4.3718586e-08, 2.2562486e-15, -1.0001646, 1.0001646, -5.161695e-08, -4.3718586e-08, 10.316383, 0, 0)
+script = ExtResource("5_0getx")
+DragCoefficient = 80.0
+Parent = NodePath("..")
+
+[node name="DragPoint6" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(-4.3718586e-08, -1.1808581, 0, -4.3718586e-08, 2.2562486e-15, -1.0001646, 1.0001646, -5.161695e-08, -4.3718586e-08, -8.02362, 0, 0)
+script = ExtResource("5_0getx")
+DragCoefficient = 65.0
+Parent = NodePath("..")
+
+[node name="DragPoint7" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(0.2614648, -0.9652129, 0, 0.9652129, 0.2614648, 0, 0, 0, 1, 11.32552, 0, 0.00066947937)
+script = ExtResource("5_0getx")
+DragCoefficient = 15.0
+Parent = NodePath("..")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 3.682, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, -1, 0)
+
+[node name="DragPoint8" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0860412, 0, 0)
+script = ExtResource("5_0getx")
+DragCoefficient = 15.0
+Parent = NodePath("..")
+
+[node name="DragPoint9" type="Marker3D" parent="." node_paths=PackedStringArray("Parent")]
+transform = Transform3D(0.4312197, -0.9022467, 0, 0.9022467, 0.4312197, 0, 0, 0, 1, -7.2177014, 1.1679728, 0.001)
+script = ExtResource("5_0getx")
+DragCoefficient = 10.0
+Parent = NodePath("..")
+
+[node name="GamepadControls2" type="Node" parent="."]
+process_mode = 4
+
+[node name="RotationInputController" type="Node" parent="GamepadControls2"]
+script = ExtResource("2_wr2uj")
+RateCurve = SubResource("Curve_8wutd")
+
+[node name="MovingThrottleInputController" type="Node" parent="GamepadControls2"]
+script = ExtResource("3_k18e7")
+ThrottleSpeed = 3.0
+
+[node name="StickControls2" type="Node" parent="."]
+
+[node name="RotationInputController2" type="Node" parent="StickControls2" node_paths=PackedStringArray("Helicopter")]
+script = ExtResource("2_wr2uj")
+Helicopter = NodePath("../..")
+RateCurve = SubResource("Curve_jsfol")
+
+[node name="ThrottleInputController" type="Node" parent="StickControls2" node_paths=PackedStringArray("Helicopter")]
+script = ExtResource("4_s82ht")
+Helicopter = NodePath("../..")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_5haps")
+debug_color = Color(0, 0.58099985, 0.83, 1)
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(-2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0, 0.5, 0, -1, 1)
+shape = SubResource("CapsuleShape3D_m6cto")
+debug_color = Color(0, 0.58099985, 0.83, 1)
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
+transform = Transform3D(-2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0, 0.5, 0, -1, -1)
+shape = SubResource("CapsuleShape3D_m6cto")
+debug_color = Color(0, 0.58099985, 0.83, 1)
+
+[node name="HelicopterGraphics" parent="." instance=ExtResource("6_l5htd")]
+transform = Transform3D(-7.059389e-08, 0, 1.615, 0, 1.615, 0, -1.615, 0, -7.059389e-08, -3.7288198, -0.8007593, 0)
+
+[node name="monitor" parent="HelicopterGraphics" index="9" node_paths=PackedStringArray("Helicopter", "Camera")]
+Helicopter = NodePath("../..")
+Camera = NodePath("../../Camera3D2")
+
+[node name="Cube_009" parent="HelicopterGraphics/monitor3" index="0"]
+surface_material_override/0 = null
+surface_material_override/1 = null
+
+[node name="Gun" type="Marker3D" parent="."]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -9.7785, -0.98093104, 2.3841858e-07)
+script = ExtResource("7_fa2sr")
+BulletSpeed = 1000.0
+
+[node name="Camera3D2" type="Camera3D" parent="."]
+transform = Transform3D(-0.4848085, -0.15563342, 0.8606619, 0, 0.98404056, 0.17794396, -0.87462026, 0.086268745, -0.47707123, -0.7937012, 1.3633118, -1.8353577)
+environment = SubResource("Environment_jedmw")
+fov = 90.0
+
+[editable path="HelicopterGraphics"]

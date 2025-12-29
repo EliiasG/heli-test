@@ -3,7 +3,6 @@ using System;
 
 public partial class Gun : Marker3D
 {
-    [Export] public RigidBody3D ParentBody;
     [Export] public Node3DPool BulletPool;
     [Export] public Node3DPool ParticlePool;
     [Export] public float BulletSpeed = 100f;
@@ -11,7 +10,6 @@ public partial class Gun : Marker3D
 
     private ulong _shootBegin;
     private ulong _shotCount;
-    private Bullet _prev;
     
 
     public override void _PhysicsProcess(double delta)
@@ -20,7 +18,6 @@ public partial class Gun : Marker3D
         {
             _shootBegin = Time.GetTicksMsec();
             _shotCount = 0;
-            _prev = null;
         }
 
         if (!Input.IsActionPressed("shoot")) return;
@@ -29,12 +26,24 @@ public partial class Gun : Marker3D
         var targetShotCount = (ulong)(elapsed / FireRate);
         if (targetShotCount <= _shotCount) return;
         
-        var bullet = BulletPool.GetNext() as Bullet;
-        bullet.GlobalTransform = GlobalTransform;
-        bullet.Velocity = GlobalTransform.Basis.X * BulletSpeed + ParentBody.LinearVelocity;
-        bullet.ParticlePool = ParticlePool;
-        bullet.Previous = _prev;
-        _prev = bullet;
+        Rpc(nameof(SpawnBulletRpc), GlobalTransform);
+        SpawnBullet(GlobalTransform, true);
         _shotCount++;
+    }
+
+    private void SpawnBullet(Transform3D transform, bool active)
+    {
+        var bullet = BulletPool.GetNext() as Bullet;
+        bullet.GlobalTransform = transform;
+        bullet.Velocity = transform.Basis.X * BulletSpeed;
+        bullet.ParticlePool = ParticlePool;
+        bullet.Active = active;
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false,
+        TransferMode = MultiplayerPeer.TransferModeEnum.Reliable, TransferChannel = 1)]
+    private void SpawnBulletRpc(Transform3D transform)
+    {
+        SpawnBullet(transform, false);
     }
 }
